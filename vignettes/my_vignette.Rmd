@@ -13,5 +13,103 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+This is an introduction to the package packagelab4. 
 
+The next sessions are going to walk you through the package and its functionalities. 
 
+## 1) Aim of the package
+This package contains functionalities that help you perform a linear regression given a data set and a formula for 
+the regression. The linear regression is as follows: 
+
+<center> $Y = X\beta + \epsilon$  </center>
+
+where Y is the independent variable and X is the matrix of dependent variables including the intercept. 
+Using the package you will be able to compute the vector of coefficients and other useful statistics.
+
+## 2) Loading the package
+To load the package run the following command:
+```{r}
+library(packagelab4)
+```
+
+## 3) What the package contains
+The package contains a reference class called  *linreg*. The class contains six different methods: *new()*, 
+*print()*, *plot()*, *resid()*, *pred()*, *coef()*, *summary()*. 
+The different methods are going to be explained in the following sections.
+
+## 4) Data set for the examples
+From now on we are going to use the in-built data set *iris* to illustrate how the class works. 
+To load the data set on to R do as follows:
+```{r}
+data("iris")
+```
+The data set has 5 variables and 150 observations.
+```{r}
+head(iris, 5)
+```
+
+## 5) new(), the constructor function
+The new() method allows you to create an instance of the class linreg. It takes as input a data frame and a 
+formula object related to the variables in the data frame.
+```{r}
+lin <- linreg$new(Petal.Length ~ Species, iris)
+```
+*lin* is now an object of the class linreg.
+
+## 6) print()
+The print() method displays some useful information about your object of class linreg. In particular, it 
+shows the coefficients of the linear regression which are found using the following formula:
+
+<center> $\hat{\beta} = (X^TX)^{-1}X^Ty$ </center>
+
+```{r}
+lin$print()
+```
+
+## 7) plot()
+The plot() method displays two useful graphs for our linear regression: residuals vs fitted and a scale-location plot.
+
+```{r}
+lin$plot()
+```
+
+## 8) resid()
+The method resid() returns the vector of residuals $\hat{e}$ which is computed as follows:
+
+<center> $\hat{e} = \hat{y} - y$ </center>
+
+Here's the code:
+
+```{r}
+lin$resid()
+```
+
+## 9) pred()
+The method pred() returns the predicted values $\hat{y}$ which is computed as follows:
+
+<center> $\hat{y} = X\hat{\beta}$ </center>
+
+Here's the code:
+
+```{r}
+lin$pred()
+```
+
+## 10) coef()
+The method coef() returns the vector of coefficients that are computed as follows:
+
+<center> $\hat{\beta} = (X^TX)^{-1}X^Ty$ </center>
+
+Here's the code:
+
+```{r}
+lin$coef()
+```
+
+## 11) summary()
+The final method is summary() which displays a summary of our regression with all the important statistics:
+
+```{r}
+lin$summary()
+```
+The coefficients are display along with the standard errors and the t values. * , ** and *** are used when the coefficients are statistically different than zero with level 0.01, 0.05 and 0.01 respectively. 
