@@ -55,7 +55,8 @@ linreg <- setRefClass(
       stopifnot(is.data.frame(data))
       stopifnot(class(formula) == "formula")
 
-      .self$d <- as.character(substitute(data)) #useful for the print method
+      .self$d <-
+        as.character(substitute(data)) #useful for the print method
       .self$data <- data
       .self$formula <- formula
       .self$X <- model.matrix(formula, data)
@@ -113,8 +114,14 @@ linreg <- setRefClass(
       # )
       # b_hat_v
       #base::print("linreg(formula = paste0(formula)[2] ~ paste0(formula)[3], data = deparse(substitute(data))")
-      cat("linreg(formula = ", paste0(formula)[2], " ~ ", paste0(formula)[3], ", data = ",
-          d, ")", sep = "")
+      cat("linreg(formula = ",
+          paste0(formula)[2],
+          " ~ ",
+          paste0(formula)[3],
+          ", data = ",
+          d,
+          ")",
+          sep = "")
       cat("\n", row.names(b_hat))
       cat("\n", b_hat)
 
@@ -210,21 +217,27 @@ linreg <- setRefClass(
       #     "on",
       #     df,
       #     "degrees of freedom")
-      m <- matrix(c(b_hat, sqrt(diag(v_b_hat_hat)), t_values, p_values), ncol = 4)
-      for (i in seq(p)){
-         if(m[i, 4] <= 0.001){
-           end <- "***"
-         }else if(0.001 < m[i, 4] & m[i, 4] <= 0.01){
-           end <- "**"
-         }else if (0.01 < m[i, 4] & m[i, 4] <= 0.05){
-           end <- "*"
-         }else{
-           end <- ""
-         }
-         cat(row.names(b_hat)[i], m[i, 1:3], end, "\n", sep = " ")
-       }
-      cat("Residual standard error: ", sqrt(v_hat), " on ", df, " degrees of freedom", sep = "")
-   }
+      m <-
+        matrix(c(b_hat, sqrt(diag(v_b_hat_hat)), t_values, p_values), ncol = 4)
+      for (i in seq(p)) {
+        if (m[i, 4] <= 0.001) {
+          end <- "***"
+        } else if (0.001 < m[i, 4] & m[i, 4] <= 0.01) {
+          end <- "**"
+        } else if (0.01 < m[i, 4] & m[i, 4] <= 0.05) {
+          end <- "*"
+        } else{
+          end <- ""
+        }
+        cat(row.names(b_hat)[i], m[i, 1:3], end, "\n", sep = " ")
+      }
+      cat("Residual standard error: ",
+          sqrt(v_hat),
+          " on ",
+          df,
+          " degrees of freedom",
+          sep = "")
+    }
 
   )
 )
