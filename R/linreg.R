@@ -22,7 +22,7 @@
 #' @return an object of class linreg
 #' @export linreg
 #' @exportClass linreg
-#' @importFrom methods new
+#' @importFrom methods new setRefClass
 #'
 #' @examples
 #' data(iris)
